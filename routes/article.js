@@ -14,6 +14,17 @@ router.get('/', function(req, res, next) {
   // res.send(200,result);
 });
 
+router.route('/:id').get(function(req, res, next) {
+  // res.send('respond with a resource');
+console.log(req)
+   db.find(req.params.id).then((result)=>{
+    console.log(result)
+    // res.send(200,result);
+    res.status(200).send(result)
+  })
+  // res.send(200,result);
+});
+
 router.post('/', function(req, res, next) {
   // res.send('respond with a resource');
   let params = req.body
