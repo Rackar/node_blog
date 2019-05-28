@@ -3,6 +3,10 @@ var jwt    = require('jsonwebtoken'); // 使用jwt签名
 var config = require('../../config/index')
 
 var User = require('../../models/user');
+
+var add = require('./article/add')
+var edit = require('./article/edit')
+
 //下面是受jwt控制的路径
 var apiRoutes = express.Router();
 apiRoutes.use(function(req, res, next) {
@@ -30,11 +34,14 @@ apiRoutes.use(function(req, res, next) {
     });
 //API跟路径返回内容
 apiRoutes.get('/', function(req, res) {
-  res.json({ message: req.decoded.name+'  欢迎使用API' });
+  res.json({ message: req.decoded.username+'  欢迎使用API' });
 });
 apiRoutes.post('/', function(req, res) {
-  res.json({ message: req.decoded.name+'  欢迎使用API,已通过验证' });
+  res.json({ message: req.decoded.usename+'  欢迎使用API,已通过验证' });
 });
+
+apiRoutes.post('/article', add);
+apiRoutes.put('/article', edit);
 // 注册API路由
 
 module.exports = apiRoutes;

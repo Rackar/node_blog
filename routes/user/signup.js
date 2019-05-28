@@ -4,7 +4,7 @@ var signup = function (req, res, next) {
     var regUser = new User({
         mobile: req.body.mobile,
         pwd: req.body.pwd,
-        name: req.body.name
+        username: req.body.username
     });
     regUser.save(function (err, content) {
         if (err) {

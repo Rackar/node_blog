@@ -11,7 +11,7 @@ var login = function(req, res, next) {
       var pwd = content.pwd;
       if (pwd === userPwd) {
         var token = jwt.sign(
-          { name: content.name, mobile: content.mobile },
+          { username: content.username, mobile: content.mobile,userid: content._id, },
           config.jwtsecret,
           {
             expiresIn: 60 * 60 * 24 // 授权时效24小时
@@ -21,8 +21,8 @@ var login = function(req, res, next) {
         console.log(token);
 
         var userData = {
-          user_id: content._id,
-          name: content.name,
+          userid: content._id,
+          username: content.username,
           mobile: content.mobile,
           token: token
         };
