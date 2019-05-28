@@ -4,31 +4,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 const db={};
 
-// MongoClient.connect(url, {
-//     useNewUrlParser: true
-// }, function (err, db) {
-//     if (err) throw err;
-//     var dbo = db.db("test");
-//     // var myobj =  [
-//     //     { name: '菜鸟工具', url: 'https://c.runoob.com', type: 'cn'},
-//     //     { name: 'Google', url: 'https://www.google.com', type: 'en'},
-//     //     { name: 'Facebook', url: 'https://www.google.com', type: 'en'}
-//     //    ];
-//     // dbo.collection("site").insertMany(myobj, function(err, res) {
-//     //     if (err) throw err;
-//     //     console.log("插入的文档数量为: " + res.insertedCount);
-//     //     db.close();
-//     // });
-//     var whereStr = {
-//         "name": '菜鸟教程'
-//     };
-//     dbo.collection("site").find(whereStr).toArray(function (err, result) { // 返回集合中所有数据
-//         if (err) throw err;
-//         console.log(result);
-//         db.close();
-//     });
 
-// });
 
 db.addpost = function addPost(post){
     MongoClient.connect(url, {

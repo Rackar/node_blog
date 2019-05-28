@@ -10,6 +10,7 @@ var edit = require('./article/edit')
 //下面是受jwt控制的路径
 var apiRoutes = express.Router();
 apiRoutes.use(function(req, res, next) {
+  
     // 拿取token 数据 按照自己传递方式写
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (token) {      
