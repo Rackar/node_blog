@@ -4,9 +4,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var jwt    = require('jsonwebtoken'); // 使用jwt签名
+var config = require('./config/index')
+
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/user/index');
 var articlesRouter = require('./routes/article');
+var apiRoutes = require('./routes/apiRoutes'); //需要token认证的路径
+
+var User = require('./models/user');
 
 var app = express();
 //设置允许跨域访问该服务.
@@ -24,15 +30,22 @@ app.all('*', function (req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// 设置superSecret 全局参数for jwt
+// app.set('superSecret', config.jwtsecret);
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//无需登录验证的
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', usersRouter);
 app.use('/article', articlesRouter);
+
+//token验证的
+app.use('/api', apiRoutes);
 
 
 // catch 404 and forward to error handler
