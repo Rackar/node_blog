@@ -10,15 +10,16 @@ var UserSchema = new Schema({
   ],
   following: [],
   followed: [],
-  count: [
+  info:"",
+  count: 
     {
       followed: Number,
-      followed: Number,
+      following: Number,
       like: Number,
       liked: Number,
       articles: Number,
       words: Number
     }
-  ]
+  
 });
 module.exports = mongoose.model("User", UserSchema);
