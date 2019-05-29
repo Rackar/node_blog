@@ -12,7 +12,7 @@ var apiRoutes = express.Router();
 apiRoutes.use(function(req, res, next) {
   
     // 拿取token 数据 按照自己传递方式写
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    var token = req.body.token || req.query.token || (req.headers['authorization'] &&req.headers['authorization'].split(' ')[1]);
     if (token) {      
         // 解码 token (验证 secret 和检查有效期（exp）)
         jwt.verify(token, config.jwtsecret, function(err, decoded) {      
