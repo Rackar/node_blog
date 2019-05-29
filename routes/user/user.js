@@ -22,7 +22,7 @@ var user = function(req, res, next) {
         }
       };
 
-      return res.send({ status: 1, msg: "登录成功", data: userData });
+      return res.send({ status: 1, msg: "拉取用户成功", data: userData });
     }
   });
 };
