@@ -7,6 +7,8 @@ var User = require("../../models/user");
 var add = require("./article/add");
 var edit = require("./article/edit");
 var addComment = require("./article/addComment");
+var like = require("./article/like");
+var follow = require("./user/follow");
 //下面是受jwt控制的路径
 var apiRoutes = express.Router();
 apiRoutes.use(function(req, res, next) {
@@ -47,6 +49,8 @@ apiRoutes.post("/", function(req, res) {
 apiRoutes.post("/article", add);
 apiRoutes.put("/article", edit);
 apiRoutes.put("/article/comment", addComment);
+apiRoutes.put("/article/like", like);
+apiRoutes.put("/user/follow", follow);
 // 注册API路由
 
 module.exports = apiRoutes;
