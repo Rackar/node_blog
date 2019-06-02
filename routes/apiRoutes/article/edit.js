@@ -6,14 +6,18 @@ var edit = function(req, res, next) {
   // res.send('respond with a resource');
   let params = req.body;
   let params_deco = req.decoded;
+  if(params_deco.userid!=params.userid)
+  {res.send({ status: 0, msg: "请重新登陆" })
 
+}else{
   Article.updateOne(
     { _id: ObjectID(params._id) },
     {
       $set: {
         title: params.title,
         content: params.content,
-        output: params.output
+        output: params.output,
+        publicdate:new Date(params.time)
       }
     },
     function(err, content) {
@@ -24,6 +28,9 @@ var edit = function(req, res, next) {
       }
     }
   );
+}
+
+  
 };
 
 module.exports = edit;
