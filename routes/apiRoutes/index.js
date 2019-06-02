@@ -6,6 +6,7 @@ var User = require("../../models/user");
 
 var add = require("./article/add");
 var edit = require("./article/edit");
+var del = require("./article/del");
 var addComment = require("./article/addComment");
 var like = require("./article/like");
 var follow = require("./user/follow");
@@ -49,6 +50,7 @@ apiRoutes.post("/", function(req, res) {
 
 apiRoutes.post("/article", add);
 apiRoutes.put("/article", edit);
+apiRoutes.delete("/article/:id", del);
 apiRoutes.get("/article/follow", follow_article);
 apiRoutes.put("/article/comment", addComment);
 apiRoutes.put("/article/like", like);

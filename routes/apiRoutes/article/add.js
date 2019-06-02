@@ -11,6 +11,7 @@ var add = function(req, res, next) {
     output: params.output,
     title: params.title,
     publicdate: new Date(),
+    clickCount:0,
     username: params_deco.username,
     userid: ObjectID(params_deco.userid) //带上用户名和id
   });

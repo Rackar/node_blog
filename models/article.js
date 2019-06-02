@@ -9,6 +9,7 @@ var ArticleSchema = new Schema({
   output: String,
   publicdate: Date,
   editdate: Date,
+  clickCount: Number,
   liked: [{ userid: Schema.Types.ObjectId, username: String }],
   likedCount: Number,
   comment: [
