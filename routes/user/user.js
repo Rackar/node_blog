@@ -12,6 +12,7 @@ var user = function(req, res, next) {
         username: content.username,
         following: content.following,
         followed: content.followed,
+        Lists:content.Lists,
         count: {
           followed: content.count.followed,
           following: content.count.following,

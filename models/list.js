@@ -2,11 +2,17 @@ var mongoose = require("../api/db_mongoose");
 var Schema = mongoose.Schema;
 
 var ListSchema = new Schema({
-  name: { type: String },
-
-  articles: [
-    {_id:Schema.Types.ObjectId,title:String}
-  ],
+  name: String ,
+  userid:Schema.Types.ObjectId,
+  username:String,
+  articles:[
+          {
+            id:Schema.Types.ObjectId,
+            title:String,
+            userid:Schema.Types.ObjectId,
+            username:String
+          }
+        ]
   
   
 });

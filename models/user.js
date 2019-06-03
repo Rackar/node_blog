@@ -1,5 +1,6 @@
 var mongoose = require("../api/db_mongoose");
 var Schema = mongoose.Schema;
+// var List =  require("./list");
 
 var UserSchema = new Schema({
   username: { type: String },
@@ -11,6 +12,20 @@ var UserSchema = new Schema({
   following: [],
   followed: [],
   info:"",
+  // Lists:[],
+  // Lists:[
+  //   {
+  //     name:String,
+  //     articles:[
+  //       {
+  //         id:Schema.Types.ObjectId,
+  //         title:String,
+  //         userid:Schema.Types.ObjectId,
+  //         username:String
+  //       }
+  //     ]
+  //   }
+  // ],
   count: 
     {
       followed: Number,

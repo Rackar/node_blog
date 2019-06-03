@@ -8,6 +8,7 @@ var signup = function(req, res, next) {
     following: [{}],
     followed: [{}],
     info: "尚未填写",
+    Lists:[],
     count: {
       followed: 1,
       following: 1,

@@ -12,6 +12,13 @@ var ArticleSchema = new Schema({
   clickCount: Number,
   liked: [{ userid: Schema.Types.ObjectId, username: String }],
   likedCount: Number,
+  Lists:[{ 
+    name:String,
+    ArticlesId:[{
+      id:Schema.Types.ObjectId,
+      name:String
+    }]
+    }],
   comment: [
     {
       userid: Schema.Types.ObjectId,

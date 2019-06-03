@@ -11,6 +11,8 @@ var addComment = require("./article/addComment");
 var like = require("./article/like");
 var follow = require("./user/follow");
 var follow_article = require("./article/follow")
+var listadd = require("./list/add")
+var listaddArticle = require("./list/addArticle")
 //下面是受jwt控制的路径
 var apiRoutes = express.Router();
 apiRoutes.use(function(req, res, next) {
@@ -55,6 +57,9 @@ apiRoutes.get("/article/follow", follow_article);
 apiRoutes.put("/article/comment", addComment);
 apiRoutes.put("/article/like", like);
 apiRoutes.put("/user/follow", follow);
+apiRoutes.post("/lists",listadd)
+apiRoutes.post("/lists/article",listaddArticle)
+apiRoutes.get("/lists/:uid",listaddArticle)
 // 注册API路由
 
 module.exports = apiRoutes;
