@@ -3,6 +3,7 @@
 var Article = require("../../../models/article");
 var User = require("../../../models/user");
 var ObjectID = require("mongodb").ObjectID;
+var List = require("../../../models/list");
 var add = function (req, res, next) {
   // res.send('respond with a resource');
   let params = req.body;
@@ -13,72 +14,72 @@ var add = function (req, res, next) {
       msg: "请重新登陆"
     })
   } else {
-    User.findOne({
-      _id: ObjectID(params.userid),
-      "Lists._id": ObjectID(params.listid)
-    }, {
-      "Lists.$": 1
+    List.findOne({
+      _id: ObjectID(params.listid),
+      "userid": ObjectID(params.userid)
     }).then(result => {
       console.log(result);
       if (result) {
-        User.updateOne({
-          _id: ObjectID(params.userid)
+        List.updateOne({
+          _id: ObjectID(params.listid)
         }, {
-          $set: {
-            Lists: {
-              $addToSet: {
-                article: [{
 
-                    id: params.aid,
-                    title: params.title,
-                    userid: params.userid,
-                    username: params.username
-                  }
+          $addToSet: {
+            articles: [{
 
-                ]
+                id: params.article.aid,
+                title: params.article.title,
+                userid: params.userid,
+                username: params.article.username
               }
-            }
+
+            ]
+
           }
 
-        }, function (err) {
-          if (err) {
+        }, function (err,content) {
+          if (err || !content) {
             res.send({
               status: 2,
-              msg: err || "取关失败"
+              msg: err || "文集添加文章失败"
             });
             console.log(err);
           } else {
-            User.findOne({
-              _id: ObjectID(params._id),
-              "followed.userid": ObjectID(params.userid)
-            }, {
-              "followed.$": 1
-            }).then(result => {
-              console.log(result);
-              if (result) {
-                User.updateOne({
-                  _id: ObjectID(params._id)
-                }, {
-                  $pull: {
-                    followed: {
-                      userid: ObjectID(params.userid)
-                    }
-                  }
-                }, function (err) {
-                  if (err) {
-                    return res.send({
-                      status: 2,
-                      msg: err || "取关失败"
-                    });
-                  } else {
-                    return res.send({
-                      status: 1,
-                      msg: "取关成功"
-                    });
-                  }
-                })
-              }
-            })
+            res.send({
+              status: 1,
+              msg: "文集添加文章成功"
+            });
+            // User.findOne({
+            //   _id: ObjectID(params._id),
+            //   "followed.userid": ObjectID(params.userid)
+            // }, {
+            //   "followed.$": 1
+            // }).then(result => {
+            //   console.log(result);
+            //   if (result) {
+            //     User.updateOne({
+            //       _id: ObjectID(params._id)
+            //     }, {
+            //       $pull: {
+            //         followed: {
+            //           userid: ObjectID(params.userid)
+            //         }
+            //       }
+            //     }, function (err) {
+            //       if (err) {
+            //         return res.send({
+            //           status: 2,
+            //           msg: err || "取关失败"
+            //         });
+            //       } else {
+            //         return res.send({
+            //           status: 1,
+            //           msg: "取关成功"
+            //         });
+            //       }
+            //     })
+            //   }
+            // })
 
           }
         });
