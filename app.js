@@ -3,7 +3,8 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
+var multer = require('multer');
+var fs = require('fs');
 var jwt = require("jsonwebtoken"); // 使用jwt签名
 var config = require("./config/index");
 
@@ -56,9 +57,38 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.use("/", indexRouter);
 app.use("/user", usersRouter);
 app.use("/article", articlesRouter);
+// app.use(multer({ dest: 'uploads/' }));
+
+// 文件上传插件 第一种方式通过
+
+// var upload = multer({ dest: 'uploads/' })
+// app.post('/profile', upload.single('avatar'), function (req, res, next) {
+//     console.log(req.file)
+//     // req.file is the `avatar` file
+//   // req.body will hold the text fields, if there were any
+// })
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now()+file.originalname)
+  }
+})
+var upload = multer({ storage: storage })
+app.post('/profile', upload.single('avatar'), function (req, res, next) {
+    console.log(req.file)
+    // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+})
+
+
+
 
 //token验证的
 app.use("/api", apiRoutes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

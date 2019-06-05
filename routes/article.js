@@ -6,7 +6,7 @@ var ObjectID = require("mongodb").ObjectID;
 router.get("/", function (req, res, next) {
   // res.send('respond with a resource');
 
-  var result = Article.find().then(result => {
+  var result = Article.find().sort({publicdate:-1}).then(result => {
     console.log(result);
     // res.send(200,result);
     res.status(200).send({
@@ -27,9 +27,10 @@ router.route("/:id").get(function (req, res, next) {
     _id: req.params.id
   }, (err, result) => {
     console.log(result.clickCount);
-    // res.send(200,result);
-    var i = result.clickCount+1
+
     if (result) {
+          // res.send(200,result);
+    var i = result.clickCount+1
       res.status(200).send({
         status: 1,
         msg: "获取成功",
@@ -38,8 +39,11 @@ router.route("/:id").get(function (req, res, next) {
       Article.updateOne({
           _id: ObjectID(req.params.id)
         }, {
-          $set: {
-            clickCount: i
+          // $set: {
+          //   clickCount: i
+          // }
+          $inc:{
+            clickCount:1
           }
         },
         function (err, content) {
