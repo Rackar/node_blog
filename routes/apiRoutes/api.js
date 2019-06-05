@@ -10,10 +10,12 @@ var del = require("./article/del");
 var addComment = require("./article/addComment");
 var like = require("./article/like");
 var follow = require("./user/follow");
-var follow_article = require("./article/follow")
-var listadd = require("./list/add")
-var listaddArticle = require("./list/addArticle")
-var listget = require("./list/getByuid")
+var follow_article = require("./article/follow");
+var listadd = require("./list/addList");
+var listaddArticle = require("./list/addArticle");
+var listremoveArticle = require("./list/removeArticle");
+var listget = require("./list/getListsByUid");
+var listdel = require("./list/removeList");
 //下面是受jwt控制的路径
 var apiRoutes = express.Router();
 apiRoutes.use(function(req, res, next) {
@@ -58,9 +60,12 @@ apiRoutes.get("/article/follow", follow_article);
 apiRoutes.put("/article/comment", addComment);
 apiRoutes.put("/article/like", like);
 apiRoutes.put("/user/follow", follow);
-apiRoutes.post("/lists",listadd)
-apiRoutes.post("/lists/article",listaddArticle)
-apiRoutes.get("/lists/:uid",listget)
+apiRoutes.post("/lists", listadd); //新增文集
+apiRoutes.post("/lists/article", listaddArticle); //给文集中添加文章
+apiRoutes.put("/lists/article", listremoveArticle); //从文集中移除文章
+apiRoutes.get("/lists/:uid", listget); //得到用户的所有文集
+apiRoutes.delete("/lists/:id", listdel); //删除文集
+
 // 注册API路由
 
 module.exports = apiRoutes;
