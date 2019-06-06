@@ -3,8 +3,8 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var multer = require('multer');
-var fs = require('fs');
+var multer = require("multer");
+var fs = require("fs");
 var jwt = require("jsonwebtoken"); // 使用jwt签名
 var config = require("./config/index");
 
@@ -69,26 +69,23 @@ app.use("/article", articlesRouter);
 // })
 
 var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+  destination: function(req, file, cb) {
+    cb(null, "uploads/");
   },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now()+file.originalname)
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now() + file.originalname);
   }
-})
-var upload = multer({ storage: storage })
-app.post('/profile', upload.single('avatar'), function (req, res, next) {
-    console.log(req.file)
-    // req.file is the `avatar` file
+});
+var upload = multer({ storage: storage });
+app.post("/profile", upload.single("avatar"), function(req, res, next) {
+  console.log(req.file);
+  return res.send({ status: 0, msg: "上传成功", data: req.file });
+  // req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
-})
-
-
-
+});
 
 //token验证的
 app.use("/api", apiRoutes);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
