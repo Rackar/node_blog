@@ -16,6 +16,7 @@ var listaddArticle = require("./list/addArticle");
 var listremoveArticle = require("./list/removeArticle");
 var listget = require("./list/getListsByUid");
 var listdel = require("./list/removeList");
+var image = require("./upload/image");
 //下面是受jwt控制的路径
 var apiRoutes = express.Router();
 apiRoutes.use(function(req, res, next) {
@@ -65,6 +66,24 @@ apiRoutes.post("/lists/article", listaddArticle); //给文集中添加文章
 apiRoutes.put("/lists/article", listremoveArticle); //从文集中移除文章
 apiRoutes.get("/lists/:uid", listget); //得到用户的所有文集
 apiRoutes.delete("/lists/:id", listdel); //删除文集
+
+
+var multer = require("multer");
+
+
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+      cb(null, "uploads/");
+    },
+    filename: function(req, file, cb) {
+      cb(null, file.fieldname + "-" + Date.now() + file.originalname);
+    }
+  });
+
+
+  var upload = multer({ storage: storage });
+
+  apiRoutes.post("/uploadimage", upload.single("avatar"), image)
 
 // 注册API路由
 

@@ -12,6 +12,8 @@ var config = require("./config/index");
 var usersRouter = require("./routes/user/index");
 var articlesRouter = require("./routes/article");
 var apiRoutes = require("./routes/apiRoutes/api"); //需要token认证的路径
+var imageRoutes = require("./routes/image");
+
 
 var User = require("./models/user");
 
@@ -57,7 +59,10 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.use("/", indexRouter);
 app.use("/user", usersRouter);
 app.use("/article", articlesRouter);
-// app.use(multer({ dest: 'uploads/' }));
+
+
+
+app.use('/getoneimage',imageRoutes)
 
 // 文件上传插件 第一种方式通过
 
@@ -68,21 +73,21 @@ app.use("/article", articlesRouter);
 //   // req.body will hold the text fields, if there were any
 // })
 
-var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function(req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now() + file.originalname);
-  }
-});
-var upload = multer({ storage: storage });
-app.post("/profile", upload.single("avatar"), function(req, res, next) {
-  console.log(req.file);
-  return res.send({ status: 0, msg: "上传成功", data: req.file });
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
-});
+// var storage = multer.diskStorage({
+//   destination: function(req, file, cb) {
+//     cb(null, "uploads/");
+//   },
+//   filename: function(req, file, cb) {
+//     cb(null, file.fieldname + "-" + Date.now() + file.originalname);
+//   }
+// });
+// var upload = multer({ storage: storage });
+// app.post("/profile", upload.single("avatar"), function(req, res, next) {
+//   console.log(req.file);
+//   return res.send({ status: 0, msg: "上传成功", data: req.file });
+//   // req.file is the `avatar` file
+//   // req.body will hold the text fields, if there were any
+// });
 
 //token验证的
 app.use("/api", apiRoutes);
