@@ -5,10 +5,11 @@ var signup = function(req, res, next) {
     mobile: req.body.mobile,
     pwd: req.body.pwd,
     username: req.body.username,
-    following: [{}],
-    followed: [{}],
+    following: [],
+    followed: [],
     info: "尚未填写",
     Lists:[],
+
     count: {
       followed: 1,
       following: 1,
