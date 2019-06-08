@@ -13,6 +13,7 @@ var image = function (req, res, next) {
                 msg: err || "用户无头像"
             });
         } else {
+            // img.status = 1;
             res.contentType('json');
             res.send(img);
 
