@@ -26,7 +26,8 @@ var user = function (req, res, next) {
           articles: content.count.articles,
           words: content.count.words
         },
-        avatar: content.avatar
+        avatar: content.avatar,
+        info: content.info
       };
 
       return res.send({
