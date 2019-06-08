@@ -19,6 +19,7 @@ var listget = require("./list/getListsByUid");
 var listdel = require("./list/removeList");
 var image = require("./upload/image");
 var userImage = require("./user/avatar");
+var previewImage = require("./upload/previewImage");
 
 //上传文件相关代码
 var multer = require("multer");
@@ -94,6 +95,7 @@ apiRoutes.delete("/lists/:id", listdel); //删除文集
 
 apiRoutes.post("/uploadimage", upload.single("avatar"), image) //上传图片
 apiRoutes.post("/user/image", upload.single("avatar"), userImage) //上传头像和修改
+apiRoutes.post("/article/image", upload.single("avatar"), previewImage) //上传头像和修改
 apiRoutes.put("/user/", useredit);
 
 // 注册API路由
