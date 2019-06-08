@@ -9,13 +9,15 @@ var ObjectID = require('mongodb').ObjectID;
 var profile = function (req, res, next) {
     let params_deco = req.decoded;
     console.log(req.file);
-
-    Image.findOne({
-        userid: params_deco.userid
+    User.findOne({
+        _id: params_deco.userid
     }).then(result => {
-        if (result) {
+        // Image.findOne({
+        //     userid: params_deco.userid
+        // }).then(result => {
+        if (result.avatar) {
             Image.update({
-                userid: params_deco.userid
+                _id: ObjectID(result.avatar)
             }, {
                 $set: {
                     'img.data': fs.readFileSync(req.file.path)
