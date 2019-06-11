@@ -8,7 +8,7 @@ var signup = function(req, res, next) {
     following: [],
     followed: [],
     info: "尚未填写",
-    Lists:[],
+    Lists: [],
 
     count: {
       followed: 1,
@@ -19,16 +19,26 @@ var signup = function(req, res, next) {
       words: 1
     }
   });
-  regUser.save(function(err, content) {
-    if (err) {
+  User.findOne({ mobile: req.body.mobile }).then(result => {
+    // console.log(res);
+    if (result) {
       return res.send({
-        status: 0,
-        msg: err || "注册失败"
+        status: 2,
+        msg: "本号码已经注册过"
       });
     } else {
-      return res.send({
-        status: 1,
-        msg: "注册成功"
+      regUser.save(function(err, content) {
+        if (err) {
+          return res.send({
+            status: 2,
+            msg: err || "注册失败"
+          });
+        } else {
+          return res.send({
+            status: 1,
+            msg: "注册成功"
+          });
+        }
       });
     }
   });
