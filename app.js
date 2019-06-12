@@ -3,10 +3,10 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var multer = require("multer");
-var fs = require("fs");
-var jwt = require("jsonwebtoken"); // 使用jwt签名
-var config = require("./config/index");
+// var multer = require("multer");
+// var fs = require("fs");
+// var jwt = require("jsonwebtoken"); // 使用jwt签名
+// var config = require("./config/index");
 
 // var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/user/index");
@@ -14,8 +14,7 @@ var articlesRouter = require("./routes/article");
 var apiRoutes = require("./routes/apiRoutes/api"); //需要token认证的路径
 var imageRoutes = require("./routes/image");
 
-
-var User = require("./models/user");
+// var User = require("./models/user");
 
 var app = express();
 //设置允许跨域访问该服务.
@@ -60,9 +59,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/user", usersRouter);
 app.use("/article", articlesRouter);
 
-
-
-app.use('/getoneimage',imageRoutes)
+app.use("/getoneimage", imageRoutes);
 
 // 文件上传插件 第一种方式通过
 

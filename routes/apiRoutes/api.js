@@ -17,9 +17,9 @@ var listaddArticle = require("./list/addArticle");
 var listremoveArticle = require("./list/removeArticle");
 var listget = require("./list/getListsByUid");
 var listdel = require("./list/removeList");
-var image = require("./upload/image");
-var userImage = require("./user/avatar");
-var previewImage = require("./upload/previewImage");
+var uploadImage = require("./upload/image");
+var userAvatar = require("./user/avatar");
+var uploadPreviewImage = require("./upload/previewImage");
 
 //上传文件相关代码
 var multer = require("multer");
@@ -92,10 +92,10 @@ apiRoutes.put("/lists/article", listremoveArticle); //从文集中移除文章
 apiRoutes.get("/lists/:uid", listget); //得到用户的所有文集
 apiRoutes.delete("/lists/:id", listdel); //删除文集
 
-apiRoutes.post("/uploadimage", upload.single("avatar"), image); //上传图片
-apiRoutes.post("/user/image", upload.single("avatar"), userImage); //上传头像和修改
-apiRoutes.post("/article/image", upload.single("avatar"), previewImage); //上传文章预览图和修改
-apiRoutes.put("/user/", useredit);
+apiRoutes.post("/uploadimage", upload.single("avatar"), uploadImage); //上传图片
+apiRoutes.post("/user/image", upload.single("avatar"), userAvatar); //上传头像和修改
+apiRoutes.post("/article/image", upload.single("avatar"), uploadPreviewImage); //上传文章预览图和修改
+apiRoutes.put("/user/", useredit); //编辑用户
 
 // 注册API路由
 
