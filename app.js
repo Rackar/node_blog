@@ -14,6 +14,8 @@ var articlesRouter = require("./routes/article");
 var apiRoutes = require("./routes/apiRoutes/api"); //需要token认证的路径
 var imageRoutes = require("./routes/image");
 
+var gps = require("./routes/gps");
+
 // var User = require("./models/user");
 
 var app = express();
@@ -60,6 +62,7 @@ app.use("/user", usersRouter);
 app.use("/article", articlesRouter);
 
 app.use("/getoneimage", imageRoutes);
+app.use("/gps", gps);
 
 // 文件上传插件 第一种方式通过
 
