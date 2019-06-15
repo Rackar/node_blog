@@ -20,14 +20,16 @@ var listdel = require("./list/removeList");
 var uploadImage = require("./upload/image");
 var userAvatar = require("./user/avatar");
 var uploadPreviewImage = require("./upload/previewImage");
+var trip = require("./trip/tripRecord");
+
 
 //上传文件相关代码
 var multer = require("multer");
 var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, "uploads/");
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, file.fieldname + "-" + Date.now() + file.originalname);
   }
 });
@@ -37,7 +39,7 @@ var upload = multer({
 
 //下面是受jwt控制的路径
 var apiRoutes = express.Router();
-apiRoutes.use(function(req, res, next) {
+apiRoutes.use(function (req, res, next) {
   // 拿取token 数据 按照自己传递方式写
   var token =
     req.body.token ||
@@ -46,7 +48,7 @@ apiRoutes.use(function(req, res, next) {
       req.headers["authorization"].split(" ")[1]);
   if (token) {
     // 解码 token (验证 secret 和检查有效期（exp）)
-    jwt.verify(token, config.jwtsecret, function(err, decoded) {
+    jwt.verify(token, config.jwtsecret, function (err, decoded) {
       if (err) {
         return res.json({
           status: 0,
@@ -68,12 +70,12 @@ apiRoutes.use(function(req, res, next) {
   }
 });
 //API跟路径返回内容
-apiRoutes.get("/", function(req, res) {
+apiRoutes.get("/", function (req, res) {
   res.json({
     msg: req.decoded.username + "  欢迎使用API"
   });
 });
-apiRoutes.post("/", function(req, res) {
+apiRoutes.post("/", function (req, res) {
   res.json({
     msg: req.decoded.usename + "  欢迎使用API,已通过验证"
   });
@@ -96,6 +98,9 @@ apiRoutes.post("/uploadimage", upload.single("avatar"), uploadImage); //上传�
 apiRoutes.post("/user/image", upload.single("avatar"), userAvatar); //上传头像和修改
 apiRoutes.post("/article/image", upload.single("avatar"), uploadPreviewImage); //上传文章预览图和修改
 apiRoutes.put("/user/", useredit); //编辑用户
+apiRoutes.post("/trip", trip.add) //新增路径
+apiRoutes.get("/trip/total", trip.getTotal) //新增路径
+apiRoutes.get("/trip/details", trip.getDetails) //新增路径
 
 // 注册API路由
 
