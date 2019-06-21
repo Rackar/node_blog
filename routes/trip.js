@@ -1,24 +1,11 @@
 var express = require("express");
 var router = express.Router();
 
-var GPS = require("../models/gps");
+var Trip = require("../models/trip");
 var add = function (req, res, next) {
   var params = req.body;
   console.log(req.body);
-  var newPoint = new GPS({
-    long: req.body.long,
-    lat: req.body.lat,
-    time: req.body.time,
-    adress: req.body.adress,
-    x: req.body.x,
-    y: req.body.y,
-    z: req.body.z,
-    heading: req.body.heading,
-    speed: req.body.speed,
-    accuracy: req.body.accuracy,
-    coordsType: req.body.coordsType,
-    tripId: req.body.tripId
-  });
+  var newPoint = new Trip(params.trip);
 
   newPoint.save(function (err, content) {
     if (err) {
@@ -29,13 +16,16 @@ var add = function (req, res, next) {
     } else {
       return res.send({
         status: 1,
-        msg: "入库成功"
+        msg: "入库成功",
+        data: {
+          tripId: content._id
+        }
       });
     }
   });
 };
 var get = function (req, res, next) {
-  GPS.find().then(result => {
+  Trip.find().then(result => {
     res.send({
       status: 1,
       msg: "获取全部数据成功",
@@ -44,7 +34,7 @@ var get = function (req, res, next) {
   });
 };
 var getlast = function (req, res, next) {
-  GPS.findOne()
+  Trip.findOne()
     .sort({
       _id: -1
     })

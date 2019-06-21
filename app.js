@@ -15,12 +15,12 @@ var apiRoutes = require("./routes/apiRoutes/api"); //需要token认证的路径
 var imageRoutes = require("./routes/image");
 
 var gps = require("./routes/gps");
-
+var trip = require("./routes/trip");
 // var User = require("./models/user");
 
 var app = express();
 //设置允许跨域访问该服务.
-app.all("*", function(req, res, next) {
+app.all("*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行。jwt需Authorization
   res.header(
@@ -63,6 +63,7 @@ app.use("/article", articlesRouter);
 
 app.use("/getoneimage", imageRoutes);
 app.use("/gps", gps);
+app.use("/trip", trip);
 
 // 文件上传插件 第一种方式通过
 
@@ -93,12 +94,12 @@ app.use("/gps", gps);
 app.use("/api", apiRoutes);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
