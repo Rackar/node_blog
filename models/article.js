@@ -11,23 +11,27 @@ var ArticleSchema = new Schema({
   publicdate: Date,
   editdate: Date,
   clickCount: Number,
-  liked: [{
-    userid: Schema.Types.ObjectId,
-    username: String
-  }],
+  liked: [
+    {
+      userid: Schema.Types.ObjectId,
+      username: String
+    }
+  ],
   likedCount: Number,
-  Lists: [{
-    name: String,
-    ArticlesId: [{
-      id: Schema.Types.ObjectId,
-      name: String
-    }]
-  }],
-  comment: [{
-    userid: Schema.Types.ObjectId,
-    username: String,
-    content: String,
-    publicdate: Date
-  }]
+  // Lists: [{
+  //   name: String,
+  //   ArticlesId: [{
+  //     id: Schema.Types.ObjectId,
+  //     name: String
+  //   }]
+  // }],
+  comment: [
+    {
+      userid: Schema.Types.ObjectId,
+      username: String,
+      content: String,
+      publicdate: Date
+    }
+  ]
 });
 module.exports = mongoose.model("Article", ArticleSchema);

@@ -15,6 +15,7 @@ var apiRoutes = require("./routes/apiRoutes/api"); //需要token认证的路径
 var imageRoutes = require("./routes/image");
 
 var gps = require("./routes/gps");
+var polyline = require("./routes/apiRoutes/trip/polyline");
 
 // var User = require("./models/user");
 
@@ -63,7 +64,7 @@ app.use("/article", articlesRouter);
 
 app.use("/getoneimage", imageRoutes);
 app.use("/gps", gps);
-
+app.use("/polyline", polyline);
 // 文件上传插件 第一种方式通过
 
 // var upload = multer({ dest: 'uploads/' })
