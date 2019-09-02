@@ -4,23 +4,34 @@
  * Module dependencies.
  */
 
-var app = require("../app");
-var debug = require("debug")("node-blog:server");
-var http = require("http");
+var app = require('../app');
+var debug = require('debug')('node-blog:server');
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+
+
+//同步读取密钥和签名证书
+var options = {
+  key: fs.readFileSync('./key/2_www.codingyang.com.key'),
+  cert: fs.readFileSync('./key/1_www.codingyang.com_bundle.crt')
+}
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || "3002");
-app.set("port", port);
+var port = normalizePort(process.env.PORT || '3002');
+app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
 var server = http.createServer(app);
+var httpsServer = https.createServer(options, app);
 
+httpsServer.listen(3001);
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -58,7 +69,9 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+  var bind = typeof port === 'string' ?
+    'Pipe ' + port :
+    'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -81,6 +94,8 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  debug("Listening on " + bind);
+  var bind = typeof addr === 'string' ?
+    'pipe ' + addr :
+    'port ' + addr.port;
+  debug('Listening on ' + bind);
 }
