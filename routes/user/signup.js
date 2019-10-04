@@ -1,5 +1,5 @@
 var User = require("../../models/user");
-var signup = function(req, res, next) {
+var signup = function (req, res, next) {
   var mobile = req.body.mobile;
   var regUser = new User({
     mobile: req.body.mobile,
@@ -19,7 +19,9 @@ var signup = function(req, res, next) {
       words: 1
     }
   });
-  User.findOne({ mobile: req.body.mobile }).then(result => {
+  User.findOne({
+    mobile: req.body.mobile
+  }).then(result => {
     // console.log(res);
     if (result) {
       return res.send({
@@ -27,7 +29,7 @@ var signup = function(req, res, next) {
         msg: "本号码已经注册过"
       });
     } else {
-      regUser.save(function(err, content) {
+      regUser.save(function (err, content) {
         if (err) {
           return res.send({
             status: 2,
