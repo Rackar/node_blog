@@ -1,108 +1,106 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+var createError = require('http-errors')
+var express = require('express')
+var path = require('path')
+var cookieParser = require('cookie-parser')
+var logger = require('morgan')
 // var multer = require("multer");
 // var fs = require("fs");
 // var jwt = require("jsonwebtoken"); // 使用jwt签名
 // var config = require("./config/index");
 
 // var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/user/index");
-var articlesRouter = require("./routes/article");
-var apiRoutes = require("./routes/apiRoutes/api"); //需要token认证的路径
-var imageRoutes = require("./routes/image");
+var usersRouter = require('./routes/user/index')
+var personRouter = require('./routes/person/index')
+var articlesRouter = require('./routes/article')
+var apiRoutes = require('./routes/apiRoutes/api') //需要token认证的路径
+var imageRoutes = require('./routes/image')
 
-var gps = require("./routes/gps");
-var polyline = require("./routes/apiRoutes/trip/polyline");
+var gps = require('./routes/gps')
+var polyline = require('./routes/apiRoutes/trip/polyline')
 
-var trip = require("./routes/trip");
+var trip = require('./routes/trip')
 // var User = require("./models/user");
 
-var app = express();
+var app = express()
 
-var swaggerUi = require('swagger-ui-express');
-var swaggerJSDoc = require('swagger-jsdoc');
+var swaggerUi = require('swagger-ui-express')
+var swaggerJSDoc = require('swagger-jsdoc')
 // swagger definition
 var swaggerDefinition = {
   info: {
     title: 'Node Swagger API',
     version: '1.0.0',
-    description: 'Demonstrating how to describe a RESTful API with Swagger',
+    description: 'Demonstrating how to describe a RESTful API with Swagger'
   },
   host: 'localhost:3002',
-  basePath: '/',
-};
-
-
-
+  basePath: '/'
+}
 
 // options for the swagger docs
 var options = {
   // import swaggerDefinitions
   swaggerDefinition: swaggerDefinition,
   // path to the API docs
-  apis: ['./routes/user/*.js'],
-};
+  apis: ['./routes/user/*.js']
+}
 
 // initialize swagger-jsdoc
-var swaggerSpec = swaggerJSDoc(options);
+var swaggerSpec = swaggerJSDoc(options)
 
 // serve swagger
-app.get('/swagger.json', function (req, res) {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+app.get('/swagger.json', function(req, res) {
+  res.setHeader('Content-Type', 'application/json')
+  res.send(swaggerSpec)
+})
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 //设置允许跨域访问该服务.
-app.all("*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+app.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
   //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行。jwt需Authorization
   res.header(
-    "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With,Content-Type,Accept,Authorization"
-  );
-  res.header("Access-Control-Allow-Methods", "*");
-  res.header("Content-Type", "application/json;charset=utf-8");
+    'Access-Control-Allow-Headers',
+    'Origin,X-Requested-With,Content-Type,Accept,Authorization'
+  )
+  res.header('Access-Control-Allow-Methods', '*')
+  res.header('Content-Type', 'application/json;charset=utf-8')
 
   //header头信息设置结束后，结束程序往下执行，如果是options请求，直接返回204允许浏览器紧接着发复杂请求
-  if (req.method.toLocaleLowerCase() === "options") {
-    res.status(204);
-    return res.json({}); //直接返回空数据，结束此次请求
+  if (req.method.toLocaleLowerCase() === 'options') {
+    res.status(204)
+    return res.json({}) //直接返回空数据，结束此次请求
   } else {
-    next();
+    next()
   }
-});
+})
 
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'jade')
 
 // 设置superSecret 全局参数for jwt
 // app.set('superSecret', config.jwtsecret);
 
-app.use(logger("dev"));
-app.use(express.json());
+app.use(logger('dev'))
+app.use(express.json())
 app.use(
   express.urlencoded({
     extended: false
   })
-);
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+)
+app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
 
 //无需登录验证的
 // app.use("/", indexRouter);
-app.use("/user", usersRouter);
-app.use("/article", articlesRouter);
+app.use('/user', usersRouter)
+app.use('/person', personRouter)
+app.use('/article', articlesRouter)
 
-app.use("/getoneimage", imageRoutes);
-app.use("/gps", gps);
-app.use("/polyline", polyline);
-app.use("/trip", trip);
+app.use('/getoneimage', imageRoutes)
+app.use('/gps', gps)
+app.use('/polyline', polyline)
+app.use('/trip', trip)
 
 // 文件上传插件 第一种方式通过
 
@@ -130,22 +128,22 @@ app.use("/trip", trip);
 // });
 
 //token验证的
-app.use("/api", apiRoutes);
+app.use('/api', apiRoutes)
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
+app.use(function(req, res, next) {
+  next(createError(404))
+})
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.message = err.message
+  res.locals.error = req.app.get('env') === 'development' ? err : {}
 
   // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
+  res.status(err.status || 500)
+  res.render('error')
+})
 
-module.exports = app;
+module.exports = app
