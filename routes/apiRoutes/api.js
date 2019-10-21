@@ -17,8 +17,7 @@ var listaddArticle = require('./list/addArticle')
 var listremoveArticle = require('./list/removeArticle')
 var listget = require('./list/getListsByUid')
 var listdel = require('./list/removeList')
-var uploadImage = require('./upload/image')
-var uploadImage64 = require('./upload/image64')
+var uploadImage = require('./upload/imagepath')
 var userAvatar = require('./user/avatar')
 var uploadPreviewImage = require('./upload/previewImage')
 var trip = require('./trip/tripRecord')
@@ -29,6 +28,7 @@ var multer = require('multer')
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, 'uploads/')
+    // cb(null, 'public/uploads/')
   },
   filename: function(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + file.originalname)
@@ -95,7 +95,6 @@ apiRoutes.get('/lists/:uid', listget) //得到用户的所有文集
 apiRoutes.delete('/lists/:id', listdel) //删除文集
 
 apiRoutes.post('/uploadimage', upload.single('avatar'), uploadImage) //上传图片
-apiRoutes.post('/uploadimagebase64', upload.single('avatar'), uploadImage64) //上传图片
 apiRoutes.post('/user/image', upload.single('avatar'), userAvatar) //上传头像和修改
 apiRoutes.post('/article/image', upload.single('avatar'), uploadPreviewImage) //上传文章预览图和修改
 apiRoutes.put('/user/', useredit) //编辑用户

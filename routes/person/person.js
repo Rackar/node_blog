@@ -4,9 +4,9 @@ var config = require('../../config') // 使用jwt签名
 var ObjectID = require('mongodb').ObjectID
 var user = function(req, res, next) {
   var id = req.params.id
-  Person.find(
+  Person.findOne(
     {
-      createrId: id
+      _id: ObjectID(id)
     },
     function(err, body) {
       if (err || !body) {
@@ -15,8 +15,6 @@ var user = function(req, res, next) {
           msg: err || '无此人物'
         })
       } else {
-        let bodys = body
-
         var userData = {
           _id: id,
           name: body.name,
@@ -25,13 +23,14 @@ var user = function(req, res, next) {
           info: body.info,
           createrId: body.createrId,
           articles: body.articles,
-          photo: body.photo
+          photo: body.photo,
+          avatarfilePath: body.avatarfilePath
         }
 
         return res.send({
           status: 1,
           msg: '拉取用户成功',
-          data: bodys
+          data: userData
         })
       }
     }

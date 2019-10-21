@@ -63,7 +63,7 @@ app.all('*', function(req, res, next) {
     'Origin,X-Requested-With,Content-Type,Accept,Authorization'
   )
   res.header('Access-Control-Allow-Methods', '*')
-  res.header('Content-Type', 'application/json;charset=utf-8')
+  // res.header('Content-Type', 'application/json;charset=utf-8')
 
   //header头信息设置结束后，结束程序往下执行，如果是options请求，直接返回204允许浏览器紧接着发复杂请求
   if (req.method.toLocaleLowerCase() === 'options') {
@@ -90,6 +90,8 @@ app.use(
 )
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+//增加uploads图片直接访问路径
+app.use(express.static(path.join(__dirname, 'uploads')))
 
 //无需登录验证的
 // app.use("/", indexRouter);

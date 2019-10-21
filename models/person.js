@@ -1,11 +1,9 @@
-var mongoose = require("../api/db_mongoose");
-var Schema = mongoose.Schema;
+var mongoose = require('../api/db_mongoose')
+var Schema = mongoose.Schema
 // var List =  require("./list");
 // var Image =require('./image.js');
 
-
 var PersonSchema = new Schema({
-
   name: {
     type: String
   },
@@ -21,19 +19,22 @@ var PersonSchema = new Schema({
   createrId: {
     type: String
   },
-  articles: [{
-    _id: Schema.Types.ObjectId,
-    title: String,
-    text: String,
-    createrid: String
-
-  }],
-  photos: [{
-    _id: Schema.Types.ObjectId,
-    title: String
-  }],
+  articles: [
+    {
+      _id: Schema.Types.ObjectId,
+      title: String,
+      text: String,
+      createrid: String
+    }
+  ],
+  photos: [
+    {
+      _id: Schema.Types.ObjectId,
+      title: String
+    }
+  ],
   followed: [],
-  avatar: {
+  avatarfilePath: {
     type: String
   },
 
@@ -45,6 +46,5 @@ var PersonSchema = new Schema({
     articles: Number,
     words: Number
   }
-
-});
-module.exports = mongoose.model("Person", PersonSchema);
+})
+module.exports = mongoose.model('Person', PersonSchema)
