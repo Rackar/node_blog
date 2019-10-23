@@ -30,7 +30,8 @@ var PersonSchema = new Schema({
   photos: [
     {
       _id: Schema.Types.ObjectId,
-      title: String
+      title: String,
+      url: String
     }
   ],
   followed: [],

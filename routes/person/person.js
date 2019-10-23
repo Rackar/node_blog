@@ -23,8 +23,8 @@ var user = function(req, res, next) {
           info: body.info,
           createrId: body.createrId,
           articles: body.articles,
-          photo: body.photo,
-          avatarfilePath: body.avatarfilePath
+          avatarfilePath: body.avatarfilePath,
+          photos: body.photos
         }
 
         return res.send({
