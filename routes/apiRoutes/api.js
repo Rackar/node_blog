@@ -23,6 +23,8 @@ var uploadPreviewImage = require('./upload/previewImage')
 var trip = require('./trip/tripRecord')
 var polyline = require('./trip/polyline')
 
+var person = require('./person/index.js')
+
 //上传文件相关代码
 var multer = require('multer')
 var storage = multer.diskStorage({
@@ -42,15 +44,12 @@ var upload = multer({
 var apiRoutes = express.Router()
 apiRoutes.use(function(req, res, next) {
   // 拿取token 数据 按照自己传递方式写
-  var token =
-    req.body.token ||
-    req.query.token ||
-    (req.headers['authorization'] && req.headers['authorization'].split(' ')[1])
+  var token = req.body.token || req.query.token || req.headers['authorization']
   if (token) {
     // 解码 token (验证 secret 和检查有效期（exp）)
     jwt.verify(token, config.jwtsecret, function(err, decoded) {
       if (err) {
-        return res.json({
+        return res.status(403).json({
           status: 0,
           msg: '无效的token.'
         })
@@ -63,7 +62,7 @@ apiRoutes.use(function(req, res, next) {
     })
   } else {
     // 没有拿到token 返回错误
-    return res.send({
+    return res.status(403).send({
       status: 0,
       msg: '没有找到token.'
     })
@@ -101,6 +100,8 @@ apiRoutes.put('/user/', useredit) //编辑用户
 apiRoutes.post('/trip', trip.add) //新增路径
 apiRoutes.get('/trip/total', trip.getTotal) //新增路径
 apiRoutes.get('/trip/details', trip.getDetails) //新增路径
+
+apiRoutes.use('/person', person)
 
 // apiRoutes.post("/polyline", polyline.add); //新增路径
 

@@ -1,7 +1,7 @@
 // var express = require('./node_modules/express');
 // var router = express.Router();
-var Person = require('../../models/person')
-var User = require('../../models/user')
+var Person = require('../../../models/person')
+var User = require('../../../models/user')
 var ObjectID = require('mongodb').ObjectID
 var like = function(req, res, next) {
   // res.send('respond with a resource');

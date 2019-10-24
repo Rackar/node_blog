@@ -1,4 +1,4 @@
-var Person = require('../../models/person')
+var Person = require('../../../models/person')
 var ObjectID = require('mongodb').ObjectID
 var signup = function(req, res, next) {
   var body = req.body

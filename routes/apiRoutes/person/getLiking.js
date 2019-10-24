@@ -1,5 +1,5 @@
-var Person = require('../../models/person')
-var User = require('../../models/user')
+var Person = require('../../../models/person')
+var User = require('../../../models/user')
 
 var ObjectID = require('mongodb').ObjectID
 var user = function(req, res, next) {

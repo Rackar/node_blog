@@ -7,9 +7,9 @@ var addPhotos = require('./addPersonPhotos')
 var person = require('./person')
 var user = require('./user')
 var avatar = require('./getUserAvatar')
-var liked = require('./setLiked.js')
-var personIDs = require('./getPeoperByIDs.js')
-var getLiking = require('./getLiking.js')
+var liked = require('./setLiked')
+var personIDs = require('./getPeoperByIDs')
+var getLiking = require('./getLiking')
 /* GET users listing. */
 
 router.post('/', add)

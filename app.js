@@ -10,7 +10,7 @@ var logger = require('morgan')
 
 // var indexRouter = require("./routes/index");
 var usersRouter = require('./routes/user/index')
-var personRouter = require('./routes/person/index')
+// var personRouter = require('./routes/person/index')
 var articlesRouter = require('./routes/article')
 var apiRoutes = require('./routes/apiRoutes/api') //需要token认证的路径
 var imageRoutes = require('./routes/image')
@@ -96,7 +96,7 @@ app.use(express.static(path.join(__dirname, 'uploads')))
 //无需登录验证的
 // app.use("/", indexRouter);
 app.use('/user', usersRouter)
-app.use('/person', personRouter)
+// app.use('/person', personRouter)
 app.use('/article', articlesRouter)
 
 app.use('/getoneimage', imageRoutes)

@@ -1,6 +1,6 @@
-var Person = require('../../models/person')
+var Person = require('../../../models/person')
 var jwt = require('jsonwebtoken') // 使用jwt签名
-var config = require('../../config') // 使用jwt签名
+var config = require('../../../config') // 使用jwt签名
 var ObjectID = require('mongodb').ObjectID
 var user = function(req, res, next) {
   var idArr = req.params.ids.map(sid => ObjectID(sid))
