@@ -1,8 +1,7 @@
-var mongoose = require("../api/db_mongoose");
-var Schema = mongoose.Schema;
+var mongoose = require('../api/db_mongoose')
+var Schema = mongoose.Schema
 // var List =  require("./list");
 // var Image =require('./image.js');
-
 
 var UserSchema = new Schema({
   username: {
@@ -14,13 +13,16 @@ var UserSchema = new Schema({
   pwd: {
     type: String
   },
-  articles: [{
-    _id: Schema.Types.ObjectId,
-    title: String
-  }],
+  articles: [
+    {
+      _id: Schema.Types.ObjectId,
+      title: String
+    }
+  ],
   following: [],
   followed: [],
-  info: "",
+  liking: [],
+  info: '',
   avatar: {
     type: String
   },
@@ -46,6 +48,5 @@ var UserSchema = new Schema({
     articles: Number,
     words: Number
   }
-
-});
-module.exports = mongoose.model("User", UserSchema);
+})
+module.exports = mongoose.model('User', UserSchema)

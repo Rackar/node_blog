@@ -24,7 +24,8 @@ var user = function(req, res, next) {
           createrId: body.createrId,
           articles: body.articles,
           avatarfilePath: body.avatarfilePath,
-          photos: body.photos
+          photos: body.photos,
+          liked: body.liked
         }
 
         return res.send({

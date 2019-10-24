@@ -15,6 +15,7 @@ var signup = function(req, res, next) {
     createrId: body.createrId,
     articles: [],
     photo: [],
+    liked: [],
     count: {
       followed: 1,
       following: 1,

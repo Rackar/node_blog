@@ -34,6 +34,13 @@ var PersonSchema = new Schema({
       url: String
     }
   ],
+  liked: [
+    {
+      _id: Schema.Types.ObjectId,
+      userid: String,
+      username: String
+    }
+  ],
   followed: [],
   avatarfilePath: {
     type: String
